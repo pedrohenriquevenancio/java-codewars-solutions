@@ -1,0 +1,24 @@
+Challenge:
+
+Complete the function that accepts a string parameter, and reverses each word in the string. All spaces in the string should be retained.
+
+Examples
+"This is an example!" ==> "sihT si na !elpmaxe"
+"double  spaces"      ==> "elbuod  secaps"
+
+-----------------
+
+Solution:
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+public class Kata
+{
+  public static String reverseWords(final String original)
+  {
+    String[] words = original.split(" ");
+    if (words.length == 0) return original;
+    return Arrays.stream(words).map(str -> new StringBuilder(str).reverse().toString()).collect(Collectors.joining(" "));
+  }
+}
