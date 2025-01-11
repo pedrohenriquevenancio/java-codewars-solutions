@@ -23,64 +23,50 @@ helper.pageIndex(-10); // should == -1
 
 Solution:
 
-
 import java.util.List;
 import java.util.ArrayList;
 
-// TODO: complete this object/class
-
 public class PaginationHelper<I> {
-
   private List<List<I>> pages;
-  
   private List<I> collection;
-  
   private int itemsPerPage;
-  /**
-   * The constructor takes in an array of items and a integer indicating how many
-   * items fit within a single page
-   */
+  
   public PaginationHelper(List<I> collection, int itemsPerPage) {
     this.pages = new ArrayList<>();
-      
     this.collection = collection;
     this.itemsPerPage = itemsPerPage;
     
     int pagesLength = (int) Math.ceil((double) this.collection.size() / this.itemsPerPage);
     for (int i = 0; i < pagesLength; i++) {
-      int index = i * pagesLength;
-      int lastIndex = i + pagesLength;
+      int index = i * itemsPerPage;
+      int lastIndex = Math.min((i + 1) * itemsPerPage, this.collection.size());
       this.pages.add(this.collection.subList(index, lastIndex));
     }
   }
     
-  /**
-   * returns the number of items within the entire collection
-   */
+   
   public int itemCount() {
     return this.collection.size();
   }
-  
-  /**
-   * returns the number of pages
-   */
+   
   public int pageCount() {
-    return 0;
+    return this.pages.size();
   }
   
-  /**
-   * returns the number of items on the current page. page_index is zero based.
-   * this method should return -1 for pageIndex values that are out of range
-   */
+   
   public int pageItemCount(int pageIndex) {
-    return 0;
+    if (pageIndex < 0 || pageIndex >= this.pages.size()) {
+        return -1;
+    }
+    return this.pages.get(pageIndex).size();
   }
   
-  /**
-   * determines what page an item is on. Zero based indexes
-   * this method should return -1 for itemIndex values that are out of range
-   */
+  
   public int pageIndex(int itemIndex) {
-    return 0;
+    if (itemIndex < 0 || itemIndex >= this.collection.size()) {
+        return -1;
+    }
+    
+    return itemIndex / itemsPerPage;
   }
 }
